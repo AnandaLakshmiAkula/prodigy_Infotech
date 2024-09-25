@@ -1,0 +1,36 @@
+def caesar_cipher(text, shift, encrypt=True):
+   # Encrypts or decrypts a given text using the Caesar Cipher algorithm.
+    if not encrypt:
+        shift = -shift  # For decryption, reverse the shift direction
+    
+    result = []
+    
+    for char in text:
+        if char.isalpha():  # Check if the character is a letter
+            shift_base = 65 if char.isupper() else 97
+            # Shift character and wrap around the alphabet using modulo
+            shifted_char = chr((ord(char) - shift_base + shift) % 26 + shift_base)
+            result.append(shifted_char)
+        else:
+            result.append(char)  # Non-alphabet characters are not changed
+    
+    return ''.join(result)
+
+
+def main():
+    print("Caesar Cipher Program")
+    mode = input("Would you like to (e)ncrypt or (d)ecrypt a message? ")
+    message = input("Enter the message: ")
+    shift = int(input("Enter the shift value (integer): "))
+
+    if mode.lower() == 'e':
+        encrypted_message = caesar_cipher(message, shift, encrypt=True)
+        print("Encrypted message:", encrypted_message)
+    elif mode.lower() == 'd':
+        decrypted_message = caesar_cipher(message, shift, encrypt=False)
+        print("Decrypted message:", decrypted_message)
+    else:
+        print("Invalid option. Please choose 'e' for encryption or 'd' for decryption.")
+
+if __name__ == "__main__":
+    main()
